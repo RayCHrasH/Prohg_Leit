@@ -15,14 +15,13 @@ typedef struct{
 } Child;
 
 void childFunc(Child *child){
-    close(child->pipe_fd[1]);
 
     char message[MESSAGE_SIZE];
     read(child->pipe_fd[0], message,sizeof(message));
     close(child->pipe_fd[0]);
 
     FILE *file = fopen(child->filename,"a");
-    fprintf(file, "%d ---> %s\n", getpid(), message);
+    fprintf(file, "[%s] ---> <%d>\n",message + 42, getpid());
     fclose(file);
 
     write(child->pipe_fd[1],"done",4);
@@ -32,7 +31,7 @@ void childFunc(Child *child){
 }
 
 void parentFunc(Child *child){
-    close(child->pipe_fd[0]);
+    
     char message[MESSAGE_SIZE];
     sprintf(message, "Hello child, I am your father and I call you: %s", child->name);
     write(child->pipe_fd[1],message,sizeof(message));
