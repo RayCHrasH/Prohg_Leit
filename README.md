@@ -1,1 +1,1 @@
-Usage: ./ergasia_prohg.out <filename> <number_of_children>
+Usage: ./ergasia_prohg.out -D_XOPEN_SOURCE=700 <filename> <number_of_children>
